@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solar_system/Provider/provider.dart';
+import 'package:solar_system/View/Splash%20Screen/splash.dart';
 
 import 'View/home page/home.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: SolarSystemPage(),
+        home: SplashScreen(),
       ),
     );
   }

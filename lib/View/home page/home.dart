@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:solar_system/View/Liked%20Screen/like.dart';
 
 import '../../Provider/provider.dart';
 import '../Detail page/detail.dart';
@@ -109,9 +110,7 @@ class _SolarSystemPageState extends State<SolarSystemPage>
                             builder: (_) => PlanetDetailPage(
                               planetName: providerTrue.solarList[index].name,
                               planetPhoto: providerTrue.solarList[index].image,
-                              colors: Color(
-                                int.parse(providerTrue.solarList[index].color),
-                              ),
+                              colors: providerTrue.solarList[index].color,
                               planetDescription:
                                   providerTrue.solarList[index].description,
                               index: index + 1,
@@ -191,20 +190,28 @@ class _SolarSystemPageState extends State<SolarSystemPage>
                             Positioned(
                               top: 0,
                               left: 35, // Center the image
-                              child: Hero(
-                                tag: providerTrue.solarList[index].name,
-                                child: Container(
-                                  height: 260,
-                                  width: 260,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                        providerTrue.solarList[index].image,
+                              child: AnimatedBuilder(
+                                animation: _rotationAnimation,
+                                builder: (context, child) {
+                                  return Transform.rotate(
+                                    angle: _rotationAnimation.value,
+                                    child: Hero(
+                                      tag: providerTrue.solarList[index].name,
+                                      child: Container(
+                                        height: 260,
+                                        width: 260,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                              providerTrue.solarList[index].image,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                }
                               ),
                             ),
 
@@ -242,8 +249,8 @@ class _SolarSystemPageState extends State<SolarSystemPage>
                                             providerTrue.solarList[index].name,
                                         planetPhoto:
                                             providerTrue.solarList[index].image,
-                                        colors: Color(int.parse(providerTrue
-                                            .solarList[index].color)),
+                                        colors: providerTrue
+                                            .solarList[index].color,
                                         planetDescription: providerTrue
                                             .solarList[index].description,
                                         index: index + 1,
@@ -285,16 +292,9 @@ class _SolarSystemPageState extends State<SolarSystemPage>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SolarSystemPage(),
-                        ));
-                      },
-                      child: Image.asset(
-                        'assets/ui/Home.png',
-                        height: 26,
-                      ),
+                    Image.asset(
+                      'assets/ui/Home.png',
+                      height: 26,
                     ),
                     GestureDetector(
                         onTap: () {},
@@ -304,7 +304,7 @@ class _SolarSystemPageState extends State<SolarSystemPage>
                         )),
                     GestureDetector(
                         onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => LikedPage(likedPlanets: planets),));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavouriteScreen(),));
                         },
                         child: Image.asset(
                           'assets/ui/Heart.png',
